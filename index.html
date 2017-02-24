@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Online Todo List</title>
+        <style>
+            table { 
+                table-layout: fixed;
+                width: 100%
+            }
+            td {
+                word-wrap: break-word;
+            }
+            #ListSectionTable {
+            }
+        </style>
+    </head>
+ 
+    <body>
+        <h1 align="center">Online To Do List</h1>
+
+        <form action="/" method="post" id="todoform" align="center">
+            <input type="text" name="textbox" id="textbox" placeholder="Add a new element..." size="24" autofocus maxlength="24" autocomplete="off" />
+            <input type="submit" id="Send_Element" value="Send" />
+        </form>
+
+        <section id="ListSection">
+            <table id="ListSectionTable" align="center">
+                
+            </table>
+        </section>
+
+
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            //Declaring the todo list array
+            var Todolist = [];
+            // Connecting to socket.io
+            var socket = io.connect('http://localhost:8080');
+            //Telling to the server that we are connected
+            socket.emit('newConnection', "");
+
+            //Updating the list when someone adds an element
+            socket.on('addnew', function(data) {
+                updateList(data.tdlist);
+            })
+
+            //Updating the list when someone connects so that he can have the most up to date list
+            socket.on('connectionUpdate', function(data) {
+                updateList(data.tdlist);
+            })
+
+            //Updating the list when an element is deleted 
+            socket.on('delete', function(data) {
+                console.log("delete");
+                updateList(data.tdlist);
+
+            })
+
+
+            // Getting the data written in the text box when we press send
+            $('#todoform').submit(function () {
+                var newListContent = $('#textbox').val();//Storing the data in a variable
+                socket.emit('addnew', newListContent); // Telling the server to add this element
+                $('#textbox').val('').focus(); // Erasing what is written in the text box and putting the focus on it
+                return false; // Blocks the POST method
+            });
+
+            //Telling the server to delete a specified element 
+            function Delete(id){
+                console.log(id);
+                socket.emit('delete', id);
+            }
+
+            // The function that manages list Update
+            function updateList(list) {
+                if(Todolist.length>list.length){
+                   Todolist.splice(list.length); 
+                }
+                for (var i=0; i<list.length;i++){
+                        Todolist[i]=list[i];
+                }
+                //After Updating the list, we should display it
+                display();
+            }
+
+            //The function tha manages displaying the list
+            function display(){
+
+                //First, we erase all what was displayed before
+                $("#ListSectionTable").empty();
+
+                //Then, we add the rows and cells in the table
+                for (var i=0; i<Todolist.length;i++){
+                  console.log("prepeding");
+                    $('#ListSectionTable').prepend(
+                        '<tr> <td style="float:right;"><input type="button" value="✘" onclick="Delete('+i+')"/></td>' + '<td> <strong>' + Todolist[i] + '</td></tr>');
+                }
+            }
+        </script>
+    </body>
+</html>
+
