@@ -37,7 +37,7 @@
             //Declaring the todo list array
             var Todolist = [];
             // Connecting to socket.io
-            var socket = io.connect('https://online-todolist.herokuapp.com');
+            var socket = io.connect('https://online-todolist.herokuapp.com:3000');
             //Telling to the server that we are connected
             socket.emit('newConnection', "");
 
