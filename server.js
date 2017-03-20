@@ -1,7 +1,7 @@
 var app = require('express')(),
     server = require('http').createServer(app),
     io = require('socket.io').listen(server),
-    ent = require('ent'), // Bloquing the HTML entities
+    ent = require('ent'); // Bloquing the HTML entities
 //Declaring our array
 var Todolist = [];
 
