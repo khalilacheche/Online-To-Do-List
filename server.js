@@ -32,7 +32,7 @@ io.sockets.on('connection',
         }); 
     
     });
-//Telling the server to listen on the 8080 port
-server.listen(app.listen(process.env.PORT, process.env.IP,function () {
+//Telling the server to listen on the 3000
+server.listen(process.env.PORT || 3000,function () {
   console.log("Server has started");
 });
