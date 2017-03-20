@@ -1,11 +1,15 @@
 {
-    "name": "online-todo-list",
-    "version": "0.1.0",
-    "dependencies": {
-        "express": "~3.3.4",
-        "socket.io": "~1.2.1",
-        "ent": "~0.1.0"
-    },
-    "author": "Khalilacheche <achechekhalil@hotmail.fr>",
-    "description": "An online interactive todo list made with socket.io"
+  "name": "OnlineToDoList",
+  "version": "1.0.0",
+  "description": "Playing around with Socket.io and Node.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "khalilacheche",
+  "license": "ISC",
+  "dependencies": {
+     "socket.io": "~1.2.1",
+      "ent": "~0.1.0",
+  }
 }
