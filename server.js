@@ -6,7 +6,8 @@ var app = require('express')(),
 //Declaring our array
 var Todolist = [];
 
-
+io.set('transports', ['xhr-polling']);
+io.set('polling duration', 10);
 // Charging the index page when the user requests it
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
