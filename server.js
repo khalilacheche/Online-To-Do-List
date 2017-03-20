@@ -1,7 +1,8 @@
 var app = require('express')(),
     server = require('http').createServer(app),
     io = require('socket.io').listen(server),
-    ent = require('ent'); // Bloquing the HTML entities
+    ent = require('ent'), // Bloquing the HTML entities
+    fs = require('fs');
 //Declaring our array
 var Todolist = [];
 
@@ -32,7 +33,8 @@ io.sockets.on('connection',
         }); 
     
     });
-//Telling the server to listen on the 3000
+//Telling the server to listen on the 8080 port
 server.listen(process.env.PORT || 3000,function () {
   console.log("Server has started");
 });
+
